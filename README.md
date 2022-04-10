@@ -1,1 +1,1 @@
-# cg-assignments-vulkan
+# vulkan-cg-assignments
