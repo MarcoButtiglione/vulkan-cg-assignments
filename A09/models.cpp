@@ -1,5 +1,8 @@
 #define M_PI           3.14159265358979323846  /* pi */
 #define GLM_FORCE_RADIANS
+#include <iostream>
+#include <iostream>
+#include <iostream>
 
 // this function creates the geometries to be shown, and output thems
 // in global variables M1_vertices and M1_indices to M4_vertices and M4_indices
@@ -249,14 +252,13 @@ const float cxSpring = 0, cySpring = 0, czSpring = 0;
 const float heightSpring = 1;
 const int NSpiral = 3;
 
-const int NSlicesTube = 64;
 const int NSlicesSpring = 2048;
+const int NSlicesTube = 64;
+
+const int totVertSpring = NSlicesSpring * NSlicesTube;
 
 // Replace the code below, that creates a simple octahedron, with the one to create a spring.
-M4_vertices.resize(3 * NSlicesSpring*NSlicesTube);
-
-
-int totVertSpring = NSlicesSpring * NSlicesTube;
+M4_vertices.resize(3 * totVertSpring);
 
 float tubeCircleVert[2*NSlicesTube];
 //Tube section
@@ -264,8 +266,10 @@ for (int i = 0;i <NSlicesTube;i++) {
 	float x = radiusTube * sin((float)i / NSlicesTube * 2.0 * M_PI);
 	float y = radiusTube * cos((float)i / NSlicesTube * 2.0 * M_PI);
 	tubeCircleVert[2*i] = x;
-	tubeCircleVert[2*i+1] = y;
+	tubeCircleVert[2*i+1] = y;	
 }
+
+
 
 
 // Vertices definitions
@@ -274,13 +278,13 @@ for (int i = 0;i < NSlicesSpring;i++) {
 			glm::mat4(1),
 			glm::vec3(
 				cxSpring + radiusSpring,
-				cySpring + heightSpring * (i / NSlicesSpring),
+				cySpring + heightSpring * ((float)i / NSlicesSpring),
 				czSpring
 			)
 	);
 	glm::mat4 Ry = glm::rotate(
 			glm::mat4(1),
-			glm::radians(i / NSlicesSpring * NSpiral * 360.0f),
+			glm::radians((float)i / NSlicesSpring * NSpiral * 360.0f),
 			glm::vec3(0, 1, 0)
 	);
 
@@ -296,27 +300,22 @@ for (int i = 0;i < NSlicesSpring;i++) {
 	}
 }
 
-
 // Resizes the indices array. Repalce the values with the correct number of
 // indices (3 * number of triangles)
-M4_indices.resize(3 * 2* NSlicesTube*NSlicesHor);
+M4_indices.resize(3 * 2* totVertSpring);
 
 // indices definitions
+/*
 
-
-for (int i = 0;i < NSlicesSpring * NSlicesTube - 3 * NSlicesTube;i++) {
+*/
+for (int i = 0;i < totVertSpring- NSlicesTube;i++) {
 	M4_indices.push_back(i);
-	M4_indices.push_back((i + 1) % totVertSpring);
-	M4_indices.push_back((i + NSlicesHor) % totVertSpring);
-}
-
-
-
-for (int i = 0;i < NSlicesSpring * NSlicesTube - 3* NSlicesTube;i++) {
 	M4_indices.push_back(i + 1);
-	M4_indices.push_back(i + NSlicesHor);
-	M4_indices.push_back(((i + NSlicesHor) % totVertSpring) + 1);
+	M4_indices.push_back((i + NSlicesTube));
+
+	M4_indices.push_back(i + 1);
+	M4_indices.push_back(i + NSlicesTube);
+	M4_indices.push_back((i + NSlicesTube) + 1);
+
 }
-
-
 }
