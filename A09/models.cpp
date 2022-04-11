@@ -309,13 +309,28 @@ M4_indices.resize(3 * 2* totVertSpring);
 
 */
 for (int i = 0;i < totVertSpring- NSlicesTube;i++) {
-	M4_indices.push_back(i);
-	M4_indices.push_back(i + 1);
-	M4_indices.push_back((i + NSlicesTube));
+	if ((i + 1) % NSlicesTube == 0) {
+		M4_indices.push_back(i);
+		M4_indices.push_back(i + 1- NSlicesTube);
+		M4_indices.push_back((i + NSlicesTube));
 
-	M4_indices.push_back(i + 1);
-	M4_indices.push_back(i + NSlicesTube);
-	M4_indices.push_back((i + NSlicesTube) + 1);
+		M4_indices.push_back(i + 1- NSlicesTube);
+		M4_indices.push_back(i + NSlicesTube);
+		M4_indices.push_back(i + 1);
+	}
+	else {
+		M4_indices.push_back(i);
+		M4_indices.push_back(i + 1);
+		M4_indices.push_back((i + NSlicesTube));
+
+		M4_indices.push_back(i + 1);
+		M4_indices.push_back(i + NSlicesTube);
+		M4_indices.push_back((i + NSlicesTube) + 1);
+	}
+
+	
+
+	
 
 }
 }
