@@ -1,0 +1,5 @@
+﻿  Assignment03.cpp
+  glm.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  A03.vcxproj -> C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A03\x64\Debug\A03.exe

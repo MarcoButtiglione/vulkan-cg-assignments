@@ -1,0 +1,2 @@
+﻿  Assignment05.cpp
+C:\Users\marco\Documents\Computer Graphics\A05\Assignment05.cpp : fatal error C1041: cannot open program database 'C:\Users\marco\Documents\Computer Graphics\A05\x64\Release\vc143.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS

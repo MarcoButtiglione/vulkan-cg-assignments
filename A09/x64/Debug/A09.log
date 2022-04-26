@@ -1,3 +1,1 @@
-﻿  Assignment09.cpp
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  A09.vcxproj -> C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A09\x64\Debug\A09.exe
+﻿  A09.vcxproj -> C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A09\x64\Debug\A09.exe

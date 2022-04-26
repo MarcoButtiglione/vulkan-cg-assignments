@@ -1,0 +1,2 @@
+C:\Users\marco\Documents\Computer Graphics\A05\x64\Debug\A05.exe
+C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A05\x64\Debug\A05.exe
