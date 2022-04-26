@@ -1,0 +1,10 @@
+﻿  Assignment0.cpp
+C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A00\Assignment0.cpp(55,9): warning C4068: unknown pragma 'GCC'
+C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A00\Assignment0.cpp(56,9): warning C4068: unknown pragma 'GCC'
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': macro redefinition
+C:\Users\marco\Documents\Visual Studio 2022\Libraries\glfw-3.3.6.bin.WIN64\include\GLFW\glfw3.h(123): message : see previous definition of 'APIENTRY'
+C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A00\Assignment0.cpp(64,9): warning C4068: unknown pragma 'GCC'
+  glm.cpp
+  Generating Code...
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  A00.vcxproj -> C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A00\x64\Debug\A00.exe
