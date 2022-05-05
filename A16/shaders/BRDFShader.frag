@@ -1,4 +1,5 @@
-#version 450#extension GL_ARB_separate_shader_objects : enable
+#version 450
+#extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec3 fragPos;
 layout(location = 1) in vec3 fragNorm;
@@ -31,24 +32,40 @@ vec3 Lambert_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C) {
 	// vec3 N : normal vector
 	// vec3 V : view direction
 	// vec3 C : main color (diffuse color, or specular color)
-	
-	return C;
+	vec3 f = C*max(dot(L,N),0);
+	return f;
 }
 
 vec3 Oren_Nayar_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float sigma) {
 	// Directional light direction
 	// additional parameter:
 	// float sigma : roughness of the material
+	float A = 1-0.5*(pow(sigma,2)/(pow(sigma,2)+0.33));
+	float B = 0.45*(pow(sigma,2)/(pow(sigma,2)+0.09));
+	vec3 vi = normalize(L-dot(L,N)*N);
+	vec3 vr = normalize(V-dot(V,N)*N);
+	float G = max(0,dot(vi,vr));
+	vec3 Li = C * clamp(dot(L,N),0.0f,1.0f);
 
-	return C;
+	float thetai = acos(dot(L,N));
+	float thetar = acos(dot(V,N));
+	float alpha = max(thetai,thetar);
+	float beta = min(thetai,thetar);
+
+
+	vec3 f = Li*(A+B*G*sin(alpha)*tan(beta));
+
+	return f;
 }
 
 vec3 Phong_Specular_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float gamma)  {
 	// Phong Specular BRDF model
 	// additional parameter:
 	// float gamma : exponent of the cosine term
+	vec3 r  = -reflect(L,N);
+	vec3 f = C * pow(clamp(dot(V,r),0.0f,1.0f),gamma);
 	
-	return vec3(0,0,0);
+	return f;
 }
 
 vec3 Toon_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, vec3 Cd, float thr) {
@@ -56,16 +73,29 @@ vec3 Toon_Diffuse_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, vec3 Cd, float thr) {
 	// additional parameters:
 	// vec3 Cd : color to be used in dark areas
 	// float thr : color threshold
-	
-	return C;
+	vec3 f ;
+	if (dot(L,N)>=thr){
+		f=C;
+	}else if(dot(L,N)>=0 && dot(L,N)<thr){
+		f=Cd;
+	}else{
+		f=vec3(0.0f,0.0f,0.0f);;
+	}
+	return f;
 }
 
 vec3 Toon_Specular_BRDF(vec3 L, vec3 N, vec3 V, vec3 C, float thr)  {
 	// Directional light direction
 	// additional parameter:
 	// float thr : color threshold
-
-	return vec3(0,0,0);
+	vec3 f ;
+	vec3 r = 2*N*dot(L,N)-L;
+	if (dot(V,r)>=thr){
+		f=C;
+	}else{
+		f=vec3(0.0f,0.0f,0.0f);
+	}
+	return f;
 }
 
 
