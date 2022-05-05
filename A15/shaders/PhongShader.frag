@@ -1,4 +1,5 @@
-#version 450#extension GL_ARB_separate_shader_objects : enable
+#version 450
+#extension GL_ARB_separate_shader_objects : enable
 
 layout(location = 0) in vec3 fragPos;
 layout(location = 1) in vec3 fragNorm;
@@ -18,38 +19,44 @@ layout(binding = 2) uniform GlobalUniformBufferObject {
 } gubo;
 
 
-
-
 /**** Modify from here *****/
 
 vec3 direct_light_dir(vec3 pos) {
 	// Directional light direction
-	return vec3(0.0f, 0.0f, 1.0f);
+	return gubo.lightDir;
 }
 
 vec3 direct_light_color(vec3 pos) {
 	// Directional light color
-	return vec3(0.5f, 1.0f, 0.5f);
+	return gubo.lightColor;
 }
 
 vec3 point_light_dir(vec3 pos) {
 	// Point light direction
-	return vec3(0.0f, 0.0f, 1.0f);
+	return normalize(gubo.lightPos-pos);
 }
 
 vec3 point_light_color(vec3 pos) {
 	// Point light color
-	return vec3(0.5f, 1.0f, 0.5f);
+	float x =pow(float(gubo.coneInOutDecayExp.z/length(gubo.lightPos-pos)),float(gubo.coneInOutDecayExp.w));
+	return x*gubo.lightColor;
 }
 
 vec3 spot_light_dir(vec3 pos) {
 	// Spot light direction
-	return vec3(0.0f, 0.0f, 1.0f);
+	return  normalize(gubo.lightPos-pos);
 }
 
 vec3 spot_light_color(vec3 pos) {
 	// Spot light color
-	return vec3(0.5f, 1.0f, 0.5f);
+	float x =pow(float(gubo.coneInOutDecayExp.z/length(gubo.lightPos-pos)),float(gubo.coneInOutDecayExp.w));
+	vec3 y = x*gubo.lightColor;
+
+	float cl = (dot(normalize(gubo.lightPos-pos),gubo.lightDir)-gubo.coneInOutDecayExp.x)/(gubo.coneInOutDecayExp.y-gubo.coneInOutDecayExp.x);
+	
+	vec3 z = y*clamp(cl,0.0f,1.0f) ;
+
+	return z;
 }
 
 /**** To from here *****/
