@@ -96,13 +96,14 @@ vec3 Case2_Color(vec3 N, vec3 V, vec3 Cd, vec3 Ca) {
 	vec3 Diffuse = vec3(0,0,0);
 	vec3 L = gubo.lightDir0;
 	vec3 C = Cd;
-	Diffuse = gubo.lightColor0 * (C*max(dot(L,N),0));
+	Diffuse = gubo.lightColor0 * (C*max(dot(L,N),0.0f));
 
 	vec3 Ambient = vec3(0,0,0);
 	vec3 HemiDir = vec3(0.0f, 1.0f, 0.0f);
 	Ambient = (((dot(N,HemiDir)+1)/2)*gubo.TopColor+((1-dot(N,HemiDir))/2)*gubo.AmbColor)*Ca;
 
 	vec3 Specular = vec3(0,0,0);
+
 	vec3 fTot = Diffuse + Ambient + Specular;
 
 	return fTot;
