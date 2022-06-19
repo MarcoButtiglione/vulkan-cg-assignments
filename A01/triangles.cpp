@@ -141,6 +141,7 @@ for (int i = 0; i < sun_segments; i++) {
 		sun_center_x + sun_radius * cos(6.28 / sun_segments * (i + 0.5)), sun_center_y + sun_radius * sin(6.28 / sun_segments * (i + 0.5)),
 		1, 0.2, 0);
 }
+/*
 
 //Orange flower
 int o_flower_segments = 64;
@@ -168,7 +169,7 @@ for (int i = 0; i < o_flower_segments; i++) {
 		p_flower_center_x + p_flower_radius * cos(6.28 / p_flower_segments * (i + 0.5)), p_flower_center_y + p_flower_radius * sin(6.28 / p_flower_segments * (i + 0.5)),
 		1, 0.4, 0.5);
 }
-
+*/
 /*
 int segments = 64;
 float center_x = 0;

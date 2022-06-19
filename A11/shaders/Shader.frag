@@ -7,9 +7,8 @@ layout(set = 0, binding = 1) uniform GlobalUniformBufferObject {
 } gubo;
 
 void main() {
-	int i;
-	outColor = vec4((float(i % 5) + sin(gubo.time * 6.28)) / 5.0,
-					float(i % 10) / 10.0,
-					float(i) / 15.0,
+	outColor = vec4(( sin(gubo.time * 6.28)) / 5.0,
+					float(gubo.time) / 10.0,
+					float(gubo.time) / 15.0,
 					1.0);
 }

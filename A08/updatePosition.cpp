@@ -1,49 +1,52 @@
-#define GLM_FORCE_RADIANS
-#include <chrono>
-
 // Create the world matrix for the robot
+
 glm::mat4 getRobotWorldMatrix(GLFWwindow* window) {
+
 	static auto startTime = std::chrono::high_resolution_clock::now();
 	static float lastTime = 0.0f;
-
 	auto currentTime = std::chrono::high_resolution_clock::now();
 	float time = std::chrono::duration<float, std::chrono::seconds::period>
 		(currentTime - startTime).count();
 	float deltaT = time - lastTime;
 	lastTime = time;
 
-	static float yaw = glm::radians(0.0f);
-	static glm::vec3 pos = glm::vec3(-3, 0, 2);
+	float static yaw = 0.0f, pitch = 0.0f, roll;
+	float mx = 0, my = 0, mz = 0;
 
-	glm::vec3 ux = glm::vec3(glm::rotate(glm::mat4(1), yaw, glm::vec3(0, 1, 0)) * glm::vec4(1, 0, 0, 1));
-	glm::vec3 uy = glm::vec3(0, 1, 0);
-	glm::vec3 uz = glm::vec3(glm::rotate(glm::mat4(1), yaw, glm::vec3(0, 1, 0)) * glm::vec4(0, 0, -1, 1));
-
-	const float ROTATION_SPEED = glm::radians(90.0f);
-	const float MOVE_SPEED = 5.0;
-
-	if (glfwGetKey(window, GLFW_KEY_W)) {
-		pos += ux * MOVE_SPEED * deltaT;
-		pos += uz * MOVE_SPEED * deltaT;
+	if (glfwGetKey(window, GLFW_KEY_D)) {
+		mx = 1;
+		roll = 0.0f;
 	}
 	if (glfwGetKey(window, GLFW_KEY_A)) {
-		yaw += ROTATION_SPEED * deltaT;;
-		//pos -= glm::vec3(0, 0, MOVE_SPEED);
+		mx = -1;
+		roll = 180.0f;
+	}
+	if (glfwGetKey(window, GLFW_KEY_W)) {
+		mz = 1;
+		roll = 90.0f - 45.0f * mx;
 	}
 	if (glfwGetKey(window, GLFW_KEY_S)) {
-		yaw += glm::radians(180.0f) * deltaT; ;
-		//pos -= glm::vec3(MOVE_SPEED, 0, 0);
+		mz = -1;
+		roll = -90.0f + 45.0f * mx;
 	}
-	if (glfwGetKey(window, GLFW_KEY_D)) {
-		yaw -= ROTATION_SPEED * deltaT;;
-		//pos += glm::vec3(0 ,0, MOVE_SPEED);
+	if (glfwGetKey(window, GLFW_KEY_Q)) {
+		my = -1;
+	}
+	if (glfwGetKey(window, GLFW_KEY_E)) {
+		my = 1;
 	}
 
-	glm::mat4 out;
+	static glm::vec3 Pos = glm::vec3(-3, 0, 2);
+	Pos.x += mx * deltaT;
+	Pos.y += my * deltaT;
+	Pos.z -= mz * deltaT;
 
-	out = glm::translate(glm::mat4(1), pos) *
-		glm::rotate(glm::mat4(1.0), yaw, glm::vec3(0, 1, 0));
+	glm::mat4 out =
+		glm::translate(glm::mat4(1.0), glm::vec3(Pos.x, Pos.y, Pos.z)) *
+		glm::rotate(glm::mat4(1.0), glm::radians(roll), glm::vec3(0, 1, 0)) *
+		glm::rotate(glm::mat4(1.0), glm::radians(pitch), glm::vec3(1, 0, 0)) *
+		glm::rotate(glm::mat4(1.0), glm::radians(yaw), glm::vec3(0, 0, 1)) *
+		glm::scale(glm::mat4(1.0), glm::vec3(1, 1, 1));
 	return out;
 }
-
 

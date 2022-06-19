@@ -44,7 +44,11 @@ glm::mat4 PO3(float a) {
 // with the given aspect ration a
 glm::mat4 PO4(float a) {
 	float t = w / a, b = -w / a;
-	glm::mat4 Sz = glm::mat4(1,0,0,0,0,1,0,0,-0.5*cos(3.14/4), -0.5 * sin(3.14 / 4),1,0,0,0,0,1);
+	glm::mat4 Sz = glm::mat4(
+		1,0,0,0,
+		0,1,0,0,
+		-0.5*cos(3.14/4),-0.5 * sin(3.14 / 4),1,0,
+		0,0,0,1);
 	glm::mat4 out = glm::scale(glm::mat4(1.0), glm::vec3(1, -1, 1)) *
 		glm::ortho(l, r, b, t, n, f) * Sz;
 	return out;

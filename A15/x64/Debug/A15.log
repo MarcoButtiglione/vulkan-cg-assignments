@@ -4,5 +4,4 @@ C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A15\Assignment15.cpp(43,9)
 C:\Program Files (x86)\Windows Kits\10\Include\10.0.19041.0\shared\minwindef.h(130,1): warning C4005: 'APIENTRY': macro redefinition
 C:\Users\marco\Documents\Visual Studio 2022\Libraries\glfw-3.3.6.bin.WIN64\include\GLFW\glfw3.h(123): message : see previous definition of 'APIENTRY'
 C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A15\Assignment15.cpp(51,9): warning C4068: unknown pragma 'GCC'
-LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
   A15.vcxproj -> C:\Users\marco\Documents\GitHub\vulkan-cg-assignments\A15\x64\Debug\A15.exe

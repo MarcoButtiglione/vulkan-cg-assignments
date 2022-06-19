@@ -33,30 +33,72 @@ vec3 direct_light_color(vec3 pos) {
 
 vec3 point_light_dir(vec3 pos) {
 	// Point light direction
-	return normalize(gubo.lightPos-pos);
+	/*
+	p = light position
+	x = the rendered point (fragPos)
+	*/
+	vec3 p = gubo.lightPos;
+	vec3 x = pos;
+
+	vec3 lx =normalize(p-x);
+	return lx ;
 }
 
 vec3 point_light_color(vec3 pos) {
 	// Point light color
-	float x =pow(float(gubo.coneInOutDecayExp.z/length(gubo.lightPos-pos)),float(gubo.coneInOutDecayExp.w));
-	return x*gubo.lightColor;
+	/*
+	l = light color
+	g = target distance (the distance at which the light reduction is exactly 1)
+	p = light position
+	x = the rendered point (fragPos)
+	beta = decay factor
+	*/
+	vec3 l = gubo.lightColor;
+	float g = gubo.coneInOutDecayExp.z;
+	vec3 p = gubo.lightPos;
+	vec3 x = pos;
+	float beta =gubo.coneInOutDecayExp.w;
+
+	vec3 L = l*pow(float(g/length(p-x)),float(beta)) ;
+	return L;
 }
 
 vec3 spot_light_dir(vec3 pos) {
 	// Spot light direction
-	return  normalize(gubo.lightPos-pos);
+	/*
+	p = light position
+	x = the rendered point (fragPos)
+	*/
+	vec3 p = gubo.lightPos;
+	vec3 x = pos;
+
+	vec3 lx =normalize(p-x);
+	return lx ;
 }
 
 vec3 spot_light_color(vec3 pos) {
 	// Spot light color
-	float x =pow(float(gubo.coneInOutDecayExp.z/length(gubo.lightPos-pos)),float(gubo.coneInOutDecayExp.w));
-	vec3 y = x*gubo.lightColor;
+	/*
+	l = light color
+	g = target distance (the distance at which the light reduction is exactly 1)
+	p = light position
+	x = the rendered point (fragPos)
+	beta = decay factor
+	d = direction of the spot light
+	cOut = outer cones
+	cIn = inner cones
+	*/
+	vec3 l = gubo.lightColor;
+	float g = gubo.coneInOutDecayExp.z;
+	vec3 p = gubo.lightPos;
+	vec3 x = pos;
+	float beta =gubo.coneInOutDecayExp.w;
+	vec3 d=gubo.lightDir;
+	float cOut = gubo.coneInOutDecayExp.x;
+	float cIn =gubo.coneInOutDecayExp.y;
 
-	float cl = (dot(normalize(gubo.lightPos-pos),gubo.lightDir)-gubo.coneInOutDecayExp.x)/(gubo.coneInOutDecayExp.y-gubo.coneInOutDecayExp.x);
-	
-	vec3 z = y*clamp(cl,0.0f,1.0f) ;
-
-	return z;
+	vec3 L = l*pow(float(g/length(p-x)),float(beta))*clamp((dot(normalize(p-x),d)-cOut)/(cIn-cOut),0.0f,1.0f) ;
+	return L;
 }
 
 /**** To from here *****/
