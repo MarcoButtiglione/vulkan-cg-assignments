@@ -146,7 +146,7 @@ M1_indices[35] = 20;
 
 //// M2 : Cylinder
 // Replace the code below, that creates a simple rotated square, with the one to create a cylinder.
-int NSlicesCylinder = 64;
+int NSlicesCylinder = 16;
 float radiusCylinder = 1;
 float heightCylinder = 2;
 float cxCyl = 0, cyCyl = 0, czCyl = 0;
