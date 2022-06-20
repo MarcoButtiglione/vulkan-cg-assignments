@@ -287,7 +287,6 @@ int totVertices = ((NSlicesVertSphere - 2) * NSlicesHorSphere + 1) + 2 + 1;
 M3_indices.resize(3 * (NSlicesHorSphere + totVertices) * 2);
 
 // indices definitions
-//(RIVEDERE QUESTA PARTE DELL'ASS.9, QUI SEMBRA AVERLA FATTA MEGLIO)
 //Top 
 for (int i = 0;i < NSlicesHorSphere;i++) {
 	M3_indices.push_back(0);
